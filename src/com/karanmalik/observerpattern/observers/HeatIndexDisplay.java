@@ -3,26 +3,24 @@ package com.karanmalik.observerpattern.observers;
 import com.karanmalik.observerpattern.subject.WeatherData;
 
 public class HeatIndexDisplay implements DisplayElement, Observer{
-    private float temp;
-    private float humidity;
-    private float pressure;
-    private float heatindex;
+    private float heatIndex;
+    private final WeatherData weatherData;
 
     public HeatIndexDisplay(WeatherData weatherData) {
+        this.weatherData = weatherData;
         weatherData.registerObserver(this);
     }
 
     @Override
     public void display() {
-        System.out.println("Heat Index is "+heatindex);
+        System.out.println("Heat Index is "+heatIndex);
     }
 
     @Override
-    public void update(float temp, float humidity, float pressure) {
-        this.temp = temp;
-        this.humidity = humidity;
-        this.pressure = pressure;
-        heatindex = computeHeatIndex(temp, humidity);
+    public void update() {
+        float temp = weatherData.getTemp();
+        float humidity = weatherData.getHumidity();
+        heatIndex = computeHeatIndex(temp, humidity);
         display();
     }
 

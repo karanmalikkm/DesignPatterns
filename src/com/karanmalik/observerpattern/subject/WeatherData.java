@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WeatherData implements Subject{
-    private List<Observer> observers;
+    private final List<Observer> observers;
     private float temp;
     private float humidity;
     private float pressure;
 
     public WeatherData() {
-        observers = new ArrayList<Observer>();
+        observers = new ArrayList<>();
     }
 
     @Override
@@ -28,7 +28,7 @@ public class WeatherData implements Subject{
     @Override
     public void notifyObservers() {
         for(Observer observer: observers){
-            observer.update(temp,humidity,pressure);
+            observer.update();
         }
     }
 
@@ -41,5 +41,17 @@ public class WeatherData implements Subject{
         this.humidity = humidity;
         this.pressure = pressure;
         measurementsChanged();
+    }
+
+    public float getTemp() {
+        return temp;
+    }
+
+    public float getHumidity() {
+        return humidity;
+    }
+
+    public float getPressure() {
+        return pressure;
     }
 }
